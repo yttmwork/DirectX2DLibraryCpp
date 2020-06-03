@@ -45,7 +45,7 @@ public:
 	* @retval false 押されていない
 	* @param[in] key_code 判定したいキーの種類(DIK_～を使用する)
 	*/
-	bool IsHeld(UINT key_code);
+	bool IsKeyHeld(UINT key_code);
 
 	/**
 	* @brief キーボードのキーが押された瞬間の判定関数
@@ -53,7 +53,7 @@ public:
 	* @retval false 押された瞬間ではない
 	* @param[in] key_code 判定したいキーの種類(DIK_～を使用する)
 	*/
-	bool IsPushed(UINT key_code);
+	bool IsKeyPushed(UINT key_code);
 
 	/**
 	* @brief キーボードのキーが離された瞬間の判定関数
@@ -61,9 +61,18 @@ public:
 	* @retval false 離された瞬間ではない
 	* @param[in] key_code 判定したいキーの種類(DIK_～を使用する)
 	*/
-	bool IsReleased(UINT key_code);
+	bool IsKeyReleased(UINT key_code);
 
-public:
+private:
+	/**
+	* @brief キーの入力判定関数
+	* @retval true 入力状態
+	* @retval false 非入力状態
+	* @param[in] key 判定したいキーの種類
+	*/
+	bool IsKeyInputed(UINT key);
+
+private:
 	LPDIRECTINPUTDEVICE8 m_Device;		//!< Keyboard用Deviceのポインタ
 	ButtonState m_State[MaxKeyNum];		//!< キーボード入力状態
 };

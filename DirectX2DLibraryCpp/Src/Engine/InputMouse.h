@@ -9,7 +9,7 @@
 #define INPUT_MOUSE_H_
 
 #include <dinput.h>
-#include "../Useful/Vec.h"
+#include "../Common/Vec.h"
 
 /** @brief マウス入力デバイスクラス */
 class Mouse
@@ -45,7 +45,7 @@ public:
 	* @retval false 押されていない
 	* @param[in] button_type 判定したいボタンの種類
 	*/
-	bool IsHeld(MouseButton button_type);
+	bool IsButtonHeld(MouseButton button_type);
 
 	/**
 	* @brief マウスボタンが押された瞬間の判定関数
@@ -53,7 +53,7 @@ public:
 	* @retval false 押した瞬間以外
 	* @param[in] button_type 判定したいボタンの種類
 	*/
-	bool IsPushed(MouseButton button_type);
+	bool IsButtonPushed(MouseButton button_type);
 
 	/**
 	* @brief マウスボタンを離した瞬間の判定関数
@@ -61,9 +61,18 @@ public:
 	* @retval false 離した瞬間以外
 	* @param[in] button_type 判定したいボタンの種類
 	*/
-	bool IsReleased(MouseButton button_type);
+	bool IsButtonReleased(MouseButton button_type);
 
-public:
+private:
+	/**
+	* @brief ボタンの入力判定関数
+	* @retval true 入力状態
+	* @retval false 非入力状態
+	* @param[in] button 判定したいボタンの種類
+	*/
+	bool IsButtonInputed(BYTE button);
+
+private:
 	LPDIRECTINPUTDEVICE8 m_Device;	// Mouse用Deviceのポインタ
 	DIMOUSESTATE m_CurrentState;	// マウスの現在の入力情報
 	DIMOUSESTATE m_PrevState;		// マウスの現在の入力情報

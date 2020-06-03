@@ -26,7 +26,7 @@ void TextureManager::ReleaseTexture(const char* keyword)
 
 void TextureManager::ReleaseAllTextures()
 {
-	for (auto itr : m_TextureList)
+	for (auto& itr : m_TextureList)
 	{
 		if (itr.second.TexutreData == nullptr)
 		{

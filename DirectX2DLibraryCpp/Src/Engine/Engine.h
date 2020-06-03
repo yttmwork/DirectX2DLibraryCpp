@@ -55,22 +55,22 @@ public:
 	* @brief 描画開始関数
 	* @details <pre>
 	* 描画開始を宣言し、バックバッファのクリアを行う
-	* この関数実行後は必ずDrawEndを実行する必要がある
+	* この関数実行後は必ずFinishDrawingを実行する必要がある
 	* </pre>
 	* @retval true 描画開始成功
 	* @retval false 描画開始失敗
 	* @param[in] color クリアカラー
 	*/
-	static bool StartDraw(DWORD color);
+	static bool StartDrawing(DWORD color);
 
 	/**
 	* @brief 描画終了関数
 	* @details <pre>
 	* 描画の終了を宣言し、バックバッファとフロントバッファを入れ替える
-	* この関数は必ずDrawStartの後に実行する
+	* この関数は必ずStartDrawingの後に実行する
 	* </pre>
 	*/
-	static void FinishDraw();
+	static void FinishDrawing();
 
 	/**
 	* @brief テクスチャ描画関数
@@ -120,7 +120,7 @@ public:
 	* @retval false 押されていない
 	* @param[in] button 判定したいボタンの種類
 	*/
-	static bool IsHeldGamePad(GamePadKind button);
+	static bool IsGamePadButtonHeld(GamePadKind button);
 
 	/**
 	* @brief ゲームパッドのボタンが押された瞬間の判定関数
@@ -128,7 +128,7 @@ public:
 	* @retval false 押した瞬間以外
 	* @param[in] button 判定したいボタンの種類
 	*/
-	static bool IsPushedGamePad(GamePadKind button);
+	static bool IsGamePadButtonPushed(GamePadKind button);
 
 	/**
 	* @brief ゲームパッドのボタンを離した瞬間の判定関数
@@ -136,7 +136,7 @@ public:
 	* @retval false 離した瞬間以外
 	* @param[in] button 判定したいボタンの種類
 	*/
-	static bool IsReleasedGamePad(GamePadKind button);
+	static bool IsGamePadButtonReleased(GamePadKind button);
 
 	/**
 	* @brief キーボードのキーの押下状態判定関数
@@ -144,7 +144,7 @@ public:
 	* @retval false 押されていない
 	* @param[in] key_code 判定したいキーの種類(DIK_～を使用する)
 	*/
-	static bool IsHeldKeyboard(UINT key_code);
+	static bool IsKeyboardKeyHeld(UINT key_code);
 
 	/**
 	* @brief キーボードのキーが押された瞬間の判定関数
@@ -152,7 +152,7 @@ public:
 	* @retval false 押された瞬間ではない
 	* @param[in] key_code 判定したいキーの種類(DIK_～を使用する)
 	*/
-	static bool IsPushedKeyboard(UINT key_code);
+	static bool IsKeyboardKeyPushed(UINT key_code);
 
 	/**
 	* @brief キーボードのキーが離された瞬間の判定関数
@@ -160,7 +160,7 @@ public:
 	* @retval false 離された瞬間ではない
 	* @param[in] key_code 判定したいキーの種類(DIK_～を使用する)
 	*/
-	static bool IsReleasedKeyboard(UINT key_code);
+	static bool IsKeyboardKeyReleased(UINT key_code);
 
 	/**
 	* @brief マウスボタンの押下状態判定関数
@@ -168,7 +168,7 @@ public:
 	* @retval false 押されていない
 	* @param[in] button_type 判定したいボタンの種類
 	*/
-	static bool IsHeldMouse(MouseButton button_type);
+	static bool IsMouseButtonHeld(MouseButton button_type);
 
 	/**
 	* @brief マウスボタンが押された瞬間の判定関数
@@ -176,7 +176,7 @@ public:
 	* @retval false 押した瞬間以外
 	* @param[in] button_type 判定したいボタンの種類
 	*/
-	static bool IsPushedMouse(MouseButton button_type);
+	static bool IsMouseButtonPushed(MouseButton button_type);
 
 	/**
 	* @brief マウスボタンを離した瞬間の判定関数
@@ -184,7 +184,7 @@ public:
 	* @retval false 離した瞬間以外
 	* @param[in] button_type 判定したいボタンの種類
 	*/
-	static bool IsReleasedMouse(MouseButton button_type);
+	static bool IsMouseButtonReleased(MouseButton button_type);
 
 	// サウンド関連
 	/**
@@ -283,6 +283,7 @@ public:
 	*/
 	static bool CreateTexture(const char* file_name, Texture* texture_data);
 
+private:
 	/**
 	* @brief Graphicsインスタンスのゲッター
 	* @retval Graphics* Graphicsインスタンス
@@ -328,10 +329,10 @@ public:
 		return &m_Window;
 	}
 
-public:
+private:
 	static Engine* m_Instance;			//!< インスタンス
 
-public:
+private:
 	Graphics m_Graphics;				//!< 描画クラス
 	Input m_Input;						//!< 入力クラス
 	Sound m_Sound;						//!< サウンドクラス

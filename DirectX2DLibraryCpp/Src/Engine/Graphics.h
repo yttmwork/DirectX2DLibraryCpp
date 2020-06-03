@@ -151,7 +151,7 @@ public:
 	*/
 	void TransformRect(CustomVertex* vertices, float pos_x, float pos_y, float angle, float scale_x, float scale_y);
 
-public:
+private:
 	LPDIRECT3D9 m_D3DInterface;						//!< DirectGraphicsインターフェース
 	LPDIRECT3DDEVICE9 m_D3DDevice;					//!< DirectGraphicsデバイス
 	LPD3DXFONT m_FontList[FontSize::FontSizeMax];	//!< フォントデバイスリスト

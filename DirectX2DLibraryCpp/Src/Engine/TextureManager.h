@@ -59,7 +59,7 @@ public:
 	*/
 	Texture* GetTexture(const char* keyword);
 
-public:
+private:
 	std::map<const char*, Texture> m_TextureList; //!< テクスチャリスト
 };
 

@@ -112,7 +112,7 @@ public:
 	*/
 	bool LoadWavFile(const char* file_name, WavData* out_wave_data);
 
-public:
+private:
 	LPDIRECTSOUND8 m_Interface = nullptr;						//!< サウンドデバイス
 	std::map<const char*, LPDIRECTSOUNDBUFFER> m_BufferList;	//!< サウンドデータ保存用
 	std::vector<LPDIRECTSOUNDBUFFER> m_DuplicateList;			//!< 複製バッファ保存用

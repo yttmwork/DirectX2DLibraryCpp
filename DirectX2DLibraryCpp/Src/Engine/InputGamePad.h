@@ -8,9 +8,7 @@
 #ifndef INPUT_GAME_PAD_H_
 #define INPUT_GAME_PAD_H_
 
-#include "../Useful/Vec.h"
-
-//** @brief デバイス列挙の結果取得用構造体 */
+/** @brief デバイス列挙の結果取得用構造体 */
 struct DeviceEnumParameter
 {
 	LPDIRECTINPUT8 InputInterface;			//!< 結果取得に使ったInputInterface
@@ -53,7 +51,7 @@ public:
 	* @retval false 押されていない
 	* @param[in] button 判定したいボタンの種類
 	*/
-	bool IsHeld(GamePadKind button);
+	bool IsButtonHeld(GamePadKind button);
 
 	/**
 	* @brief ゲームパッドのボタンが押された瞬間の判定関数
@@ -62,7 +60,7 @@ public:
 	* @retval false 押した瞬間以外
 	* @param[in] button 判定したいボタンの種類
 	*/
-	bool IsPushed(GamePadKind button);
+	bool IsButtonPushed(GamePadKind button);
 
 	/**
 	* @brief ゲームパッドのボタンを離した瞬間の判定関数
@@ -71,7 +69,7 @@ public:
 	* @retval false 離した瞬間以外
 	* @param[in] button 判定したいボタンの種類
 	*/
-	bool IsReleased(GamePadKind button);
+	bool IsButtonReleased(GamePadKind button);
 
 	/**
 	* @brief ゲームパッド制御始動関数
@@ -91,7 +89,16 @@ public:
 	*/
 	static BOOL CALLBACK DeviceFindCallBack(LPCDIDEVICEINSTANCE pad_instance, LPVOID out_pad_data);
 
-public:
+private:
+	/**
+	* @brief ボタンの入力判定関数
+	* @retval true 入力状態
+	* @retval false 非入力状態
+	* @param[in] button 判定したいボタンの種類
+	*/
+	bool IsButtonInputed(BYTE button);
+
+private:
 	LPDIRECTINPUTDEVICE8 m_Device;						// ゲームパッド用Deviceのポインタ
 	ButtonState m_States[GamePadKind::GamePadKindMax];	// ゲームパッドの入力状態
 };

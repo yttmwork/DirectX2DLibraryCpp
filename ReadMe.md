@@ -94,13 +94,13 @@ Engine::ReleaseAllTextures();
 // 描画開始
 // 描画処理を実行する場合、必ず最初実行する
 // 1フレームに1度だけ実行する
-Engine::StartDraw(0);
+Engine::StartDrawing(0);
 
 // テクスチャなどの描画処理を実行する
 
 // 描画終了
 // 描画処理を終了する場合に必ず実行する
-Engine::FinishDraw();
+Engine::FinishDrawing();
 ```
 
 #### テクスチャ描画
@@ -156,19 +156,19 @@ Engine::DrawFont(
 ```
 // キーの指定はDIK～で行う
 // 押された瞬間
-if (Engine::IsPushedKeyboard(DIK_A) == true)
+if (Engine::IsKeyboardKeyPushed(DIK_A) == true)
 {
 	// Aキーが押された瞬間
 }
 
 // 押している間
-if (Engine::IsHeldKeyboard(DIK_A) == true)
+if (Engine::IsKeyboardKeyHeld(DIK_A) == true)
 {
 	// Aキーが押されている
 }
 
 // 離された瞬間
-if (Engine::IsReleasedKeyboard(DIK_A) == true)
+if (Engine::IsKeyboardKeyReleased(DIK_A) == true)
 {
 	// Aキーが離された瞬間
 }
@@ -177,19 +177,19 @@ if (Engine::IsReleasedKeyboard(DIK_A) == true)
 #### マウス入力取得
 ```
 // 押された瞬間
-if (Engine::IsPushedMouse(MouseButton::Left) == true)
+if (Engine::IsMouseButtonPushed(MouseButton::Left) == true)
 {
 	// マウスの左ボタンを押した瞬間
 }
 
 // 押している間
-if (Engine::IsHeldMouse(MouseButton::Left) == true)
+if (Engine::IsMouseButtonHeld(MouseButton::Left) == true)
 {
 	// マウスの左ボタンを押している
 }
 
 // 離された瞬間
-if (Engine::IsReleasedMouse(MouseButton::Left) == true)
+if (Engine::IsMouseButtonReleased(MouseButton::Left) == true)
 {
 	// マウスの左ボタンを離した瞬間
 }
@@ -198,19 +198,19 @@ if (Engine::IsReleasedMouse(MouseButton::Left) == true)
 #### ゲームパッド入力取得
 ```
 // 押された瞬間
-if (Engine::IsPushedGamePad(GamePadKind::GamePadKindButton01) == true)
+if (Engine::IsGamePadButtonPushed(GamePadKind::GamePadKindButton01) == true)
 {
 	// ゲームパッドのボタン1を押した瞬間
 }
 
 // 押している間
-if (Engine::IsHeldGamePad(GamePadKind::GamePadKindButton01) == true)
+if (Engine::IsGamePadButtonHeld(GamePadKind::GamePadKindButton01) == true)
 {
 	// ゲームパッドのボタン1を押している
 }
 
 // 離された瞬間
-if (Engine::IsReleasedGamePad(GamePadKind::GamePadKindButton01) == true)
+if (Engine::IsGamePadButtonReleased(GamePadKind::GamePadKindButton01) == true)
 {
 	// ゲームパッドのボタン1を離した瞬間
 }

@@ -54,12 +54,12 @@ void Engine::Update()
 	m_Instance->GetSound()->EraseDuplicateSound();
 }
 
-bool Engine::StartDraw(DWORD color)
+bool Engine::StartDrawing(DWORD color)
 {
 	return m_Instance->GetGraphics()->StartDraw(color);
 }
 
-void Engine::FinishDraw()
+void Engine::FinishDrawing()
 {
 	m_Instance->GetGraphics()->FinishDraw();
 }
@@ -79,58 +79,58 @@ void Engine::DrawFont(float x, float y, const char* text, FontSize size, FontCol
 	m_Instance->GetGraphics()->DrawFont(x, y, text, size, color);
 }
 
-bool Engine::IsHeldGamePad(GamePadKind button)
+bool Engine::IsGamePadButtonHeld(GamePadKind button)
 {
 	GamePad* game_pad = m_Instance->GetInput()->GetGamePad();
-	return game_pad->IsHeld(button);
+	return game_pad->IsButtonHeld(button);
 }
 
-bool Engine::IsPushedGamePad(GamePadKind button)
+bool Engine::IsGamePadButtonPushed(GamePadKind button)
 {
 	GamePad* game_pad = m_Instance->GetInput()->GetGamePad();
-	return game_pad->IsPushed(button);
+	return game_pad->IsButtonPushed(button);
 }
 
-bool Engine::IsReleasedGamePad(GamePadKind button)
+bool Engine::IsGamePadButtonReleased(GamePadKind button)
 {
 	GamePad* game_pad = m_Instance->GetInput()->GetGamePad();
-	return game_pad->IsReleased(button);
+	return game_pad->IsButtonReleased(button);
 }
 
-bool Engine::IsHeldKeyboard(UINT key_code)
+bool Engine::IsKeyboardKeyHeld(UINT key_code)
 {
 	Keyboard* keyboard = m_Instance->GetInput()->GetKeyboard();
-	return keyboard->IsHeld(key_code);
+	return keyboard->IsKeyHeld(key_code);
 }
 
-bool Engine::IsPushedKeyboard(UINT key_code)
+bool Engine::IsKeyboardKeyPushed(UINT key_code)
 {
 	Keyboard* keyboard = m_Instance->GetInput()->GetKeyboard();
-	return keyboard->IsPushed(key_code);
+	return keyboard->IsKeyPushed(key_code);
 }
 
-bool Engine::IsReleasedKeyboard(UINT key_code)
+bool Engine::IsKeyboardKeyReleased(UINT key_code)
 {
 	Keyboard* keyboard = m_Instance->GetInput()->GetKeyboard();
-	return keyboard->IsReleased(key_code);
+	return keyboard->IsKeyReleased(key_code);
 }
 
-bool Engine::IsHeldMouse(MouseButton button_type)
+bool Engine::IsMouseButtonHeld(MouseButton button_type)
 {
 	Mouse* mouse = m_Instance->GetInput()->GetMouse();
-	return mouse->IsHeld(button_type);
+	return mouse->IsButtonHeld(button_type);
 }
 
-bool Engine::IsPushedMouse(MouseButton button_type)
+bool Engine::IsMouseButtonPushed(MouseButton button_type)
 {
 	Mouse* mouse = m_Instance->GetInput()->GetMouse();
-	return mouse->IsPushed(button_type);
+	return mouse->IsButtonPushed(button_type);
 }
 
-bool Engine::IsReleasedMouse(MouseButton button_type)
+bool Engine::IsMouseButtonReleased(MouseButton button_type)
 {
 	Mouse* mouse = m_Instance->GetInput()->GetMouse();
-	return mouse->IsReleased(button_type);
+	return mouse->IsButtonReleased(button_type);
 }
 
 void Engine::PlaySound(const char* keyword, bool is_loop)

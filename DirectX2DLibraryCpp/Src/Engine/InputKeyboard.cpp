@@ -1,7 +1,6 @@
 ﻿#include <Windows.h>
 #include <math.h>
 #include <D3dx9math.h>
-#include "../Useful/Vec.h"
 #include "Window.h"
 #include "Input.h"
 
@@ -56,7 +55,6 @@ void Keyboard::Update()
 	// キー情報取格納用
 	BYTE key_states[MaxKeyNum];
 	HRESULT hr;
-	const int KeyTrg = 0x80;
 
 	if (m_Device == nullptr)
 	{
@@ -70,7 +68,7 @@ void Keyboard::Update()
 		for (int i = 0; i < MaxKeyNum; i++)
 		{
 			bool is_push = false;
-			if (key_states[i] & KeyTrg)
+			if (IsKeyInputed(key_states[i]))
 			{
 				is_push = true;
 			}
@@ -84,32 +82,23 @@ void Keyboard::Update()
 	}
 }
 
-bool Keyboard::IsHeld(UINT key_code)
+bool Keyboard::IsKeyHeld(UINT key_code)
 {
-	if (m_State[key_code] == ButtonState::ButtonStateHeld)
-	{
-		return true;
-	}
-
-	return false;
+	return (m_State[key_code] == ButtonState::ButtonStateHeld);
 }
 
-bool Keyboard::IsPushed(UINT key_code)
+bool Keyboard::IsKeyPushed(UINT key_code)
 {
-	if (m_State[key_code] == ButtonState::ButtonStatePushed)
-	{
-		return true;
-	}
-
-	return false;
+	return (m_State[key_code] == ButtonState::ButtonStatePushed);
 }
 
-bool Keyboard::IsReleased(UINT key_code)
+bool Keyboard::IsKeyReleased(UINT key_code)
 {
-	if (m_State[key_code] == ButtonState::ButtonStateReleased)
-	{
-		return true;
-	}
+	return (m_State[key_code] == ButtonState::ButtonStateReleased);
+}
 
-	return false;
+bool Keyboard::IsKeyInputed(UINT key)
+{
+	const int KeyTrg = 0x80;
+	return (key & KeyTrg);
 }

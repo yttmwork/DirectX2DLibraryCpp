@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <D3dx9math.h>
-#include "../Useful/Vec.h"
 #include "Window.h"
 #include "Input.h"
 
@@ -52,9 +51,9 @@ bool GamePad::Initialize(LPDIRECTINPUT8 input_interface)
 	}
 
 	// 入力情報の初期化
-	for (int i = 0; i < GamePadKind::GamePadKindMax; i++)
+	for (auto& state : m_States)
 	{
-		m_States[i] = ButtonState::ButtonStateNone;
+		state = ButtonState::ButtonStateNone;
 	}
 
 	return true;
@@ -72,34 +71,19 @@ void GamePad::Release()
 	}
 }
 
-bool GamePad::IsHeld(GamePadKind button)
+bool GamePad::IsButtonHeld(GamePadKind button)
 {
-	if (m_States[button] == ButtonState::ButtonStateHeld)
-	{
-		return true;
-	}
-
-	return false;
+	return (m_States[button] == ButtonState::ButtonStateHeld);
 }
 
-bool GamePad::IsPushed(GamePadKind button)
+bool GamePad::IsButtonPushed(GamePadKind button)
 {
-	if (m_States[button] == ButtonState::ButtonStatePushed)
-	{
-		return true;
-	}
-
-	return false;
+	return (m_States[button] == ButtonState::ButtonStatePushed);
 }
 
-bool GamePad::IsReleased(GamePadKind button)
+bool GamePad::IsButtonReleased(GamePadKind button)
 {
-	if (m_States[button] == ButtonState::ButtonStateReleased)
-	{
-		return true;
-	}
-
-	return false;
+	return (m_States[button] == ButtonState::ButtonStateReleased);
 }
 
 void GamePad::Update()
@@ -118,9 +102,9 @@ void GamePad::Update()
 		// 再度制御開始
 		if (FAILED(m_Device->Acquire()))
 		{
-			for (int i = 0; i < GamePadKind::GamePadKindMax; i++)
+			for (auto& state : m_States)
 			{
-				m_States[i] = ButtonState::ButtonStateNone;
+				state = ButtonState::ButtonStateNone;
 			}
 
 			m_Device->Poll();
@@ -178,11 +162,10 @@ void GamePad::Update()
 	}
 
 	int base_index = ButtonKind::Button01;
-	const int ButtonTrg = 0x80;
 	// ボタン判定
 	for (int i = 0; i < ButtonKind::ButtonKindMax - base_index; i++)
 	{
-		if (!(pad_data.rgbButtons[i] & ButtonTrg))
+		if (IsButtonInputed(pad_data.rgbButtons[i]) == false)
 		{
 			continue;
 		}
@@ -310,4 +293,10 @@ BOOL CALLBACK GamePad::DeviceFindCallBack(LPCDIDEVICEINSTANCE pad_instance, LPVO
 	parameter->FindCount++;
 
 	return DIENUM_CONTINUE;
+}
+
+bool GamePad::IsButtonInputed(BYTE button)
+{
+	const int ButtonTrg = 0x80;
+	return (button & ButtonTrg);
 }

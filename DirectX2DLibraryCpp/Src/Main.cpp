@@ -3,7 +3,7 @@
 #include <crtdbg.h>
 #include <Windows.h>
 #include "Engine/Engine.h"
-#include "Useful/Vec.h"
+#include "Common/Vec.h"
 
 Vec2 g_Position = Vec2(0.0f, 0.0f);
 Vec2 g_Scale = Vec2(1.0f, 1.0f);
@@ -89,36 +89,36 @@ void GameProcessing()
 	g_Angle += 1.0f;
 
 	// キーボードの入力取得
-	if (Engine::IsHeldKeyboard(DIK_LEFT) == true)
+	if (Engine::IsKeyboardKeyHeld(DIK_LEFT) == true)
 	{
 		g_Position.X -= speed;
 	}
-	else if (Engine::IsHeldKeyboard(DIK_RIGHT) == true)
+	else if (Engine::IsKeyboardKeyHeld(DIK_RIGHT) == true)
 	{
 		g_Position.X += speed;
 	}
 
 	// ゲームパッドの入力取得
-	if (Engine::IsHeldGamePad(GamePadKind::GamePadKindUp))
+	if (Engine::IsGamePadButtonHeld(GamePadKind::GamePadKindUp))
 	{
 		g_Position.Y -= speed;
 	}
-	else if (Engine::IsHeldGamePad(GamePadKind::GamePadKindDown))
+	else if (Engine::IsGamePadButtonHeld(GamePadKind::GamePadKindDown))
 	{
 		g_Position.Y += speed;
 	}
 
 	// マウスの入力取得
-	if (Engine::IsPushedMouse(MouseButton::Left))
+	if (Engine::IsMouseButtonPushed(MouseButton::Left))
 	{
 		g_Position = Vec2(200, 200);
 	}
-	else if (Engine::IsPushedMouse(MouseButton::Right))
+	else if (Engine::IsMouseButtonPushed(MouseButton::Right))
 	{
 		g_Position = Vec2(400, 300);
 	}
 
-	if (Engine::IsReleasedKeyboard(DIK_A))
+	if (Engine::IsKeyboardKeyReleased(DIK_A))
 	{
 		// 重複再生
 		// 指定されたキーワードのサウンドファイル再生する
@@ -132,7 +132,7 @@ void DrawProcessing()
 {
 	// 描画開始
 	// 描画処理を実行する場合、必ず最初実行する
-	Engine::StartDraw(0);
+	Engine::StartDrawing(0);
 
 	// テクスチャ描画
 	// キーワードで指定されたテクスチャを描画する
@@ -147,5 +147,5 @@ void DrawProcessing()
 
 	// 描画終了
 	// 描画処理を終了する場合、必ず最後に実行する
-	Engine::FinishDraw();
+	Engine::FinishDrawing();
 }

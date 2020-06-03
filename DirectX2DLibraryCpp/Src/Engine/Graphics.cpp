@@ -1,6 +1,5 @@
 ﻿#include "Graphics.h"
 #include "Engine.h"
-#include "../Useful/Size.h"
 
 // 静的ライブラリ
 #pragma comment(lib, "d3d9.lib")
@@ -47,14 +46,14 @@ bool Graphics::Initialize(bool is_window_mode)
 
 void Graphics::Release()
 {
-	for (int i = 0; i < FontSize::FontSizeMax; i++)
+	for (auto& device : m_FontList)
 	{
-		if (m_FontList[i] == nullptr)
+		if (device == nullptr)
 		{
 			continue;
 		}
-		m_FontList[i]->Release();
-		m_FontList[i] = nullptr;
+		device->Release();
+		device = nullptr;
 	}
 
 	if (m_D3DDevice != nullptr)
@@ -224,7 +223,6 @@ void Graphics::DrawFont(float x, float y, const char* text, FontSize font_type, 
 
 bool Graphics::CreateTexture(const char* file_name, Texture* texture_data)
 {
-	Size size;
 	D3DXIMAGE_INFO info;
 
 	// 2の累乗じゃないケースを想定して元のサイズを取得してD3DXCreateTextureFromFileExで使う

@@ -85,7 +85,8 @@ public:
 	{
 		return &m_Mouse;
 	}
-public:
+
+private:
 	LPDIRECTINPUT8 m_Interface;	//!< DIRECTINPUT8のポインタ
 	Keyboard m_Keyboard;		//!< 入力デバイス(キーボード)
 	GamePad m_GamePad;			//!< 入力デバイス(ゲームパッド)

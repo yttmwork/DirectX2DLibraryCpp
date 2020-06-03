@@ -87,12 +87,10 @@ void Mouse::Update()
 	m_Pos.Y = (float)p.y;
 }
 
-bool Mouse::IsHeld(MouseButton button_type)
+bool Mouse::IsButtonHeld(MouseButton button_type)
 {
-	const int MouseTrgValue = 0x80;
-
-	if (!(m_PrevState.rgbButtons[button_type] & MouseTrgValue) &&
-		m_CurrentState.rgbButtons[button_type] & MouseTrgValue)
+	if (IsButtonInputed(m_PrevState.rgbButtons[button_type]) == false &&
+		IsButtonInputed(m_CurrentState.rgbButtons[button_type]) == true)
 	{
 		return true;
 	}
@@ -100,11 +98,10 @@ bool Mouse::IsHeld(MouseButton button_type)
 	return false;
 }
 
-bool Mouse::IsPushed(MouseButton button_type)
+bool Mouse::IsButtonPushed(MouseButton button_type)
 {
-	const int MouseTrgValue = 0x80;
-	if (m_PrevState.rgbButtons[button_type] & MouseTrgValue &&
-		m_CurrentState.rgbButtons[button_type] & MouseTrgValue)
+	if (IsButtonInputed(m_PrevState.rgbButtons[button_type]) == true &&
+		IsButtonInputed(m_CurrentState.rgbButtons[button_type]) == true)
 	{
 		return true;
 	}
@@ -112,15 +109,19 @@ bool Mouse::IsPushed(MouseButton button_type)
 	return false;
 }
 
-bool Mouse::IsReleased(MouseButton button_type)
+bool Mouse::IsButtonReleased(MouseButton button_type)
 {
-	const int MouseTrgValue = 0x80;
-
-	if (m_PrevState.rgbButtons[button_type] & MouseTrgValue &&
-		!(m_CurrentState.rgbButtons[button_type] & MouseTrgValue))
+	if (IsButtonInputed(m_PrevState.rgbButtons[button_type]) == true &&
+		IsButtonInputed(m_CurrentState.rgbButtons[button_type]) == false)
 	{
 		return true;
 	}
 
 	return false;
+}
+
+bool Mouse::IsButtonInputed(BYTE button)
+{
+	const int MouseTrg = 0x80;
+	return (button & MouseTrg);
 }

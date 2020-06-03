@@ -36,16 +36,16 @@ void Sound::Release()
 	ReleaseAllSoundFiles();
 
 	// 全解放
-	for (auto itr = m_DuplicateList.begin(); itr != m_DuplicateList.end(); itr++)
+	for (auto& buffer : m_DuplicateList)
 	{
-		if (*itr == nullptr)
+		if (buffer == nullptr)
 		{
 			continue;
 		}
 
-		(*itr)->Stop();
-		(*itr)->Release();
-		(*itr) = nullptr;
+		buffer->Stop();
+		buffer->Release();
+		buffer = nullptr;
 	}
 	m_DuplicateList.clear();
 
@@ -131,13 +131,13 @@ void Sound::ReleaseSoundFile(const char* keyword)
 void Sound::ReleaseAllSoundFiles()
 {
 	// セカンダリバッファの解放
-	for (auto itr = m_BufferList.begin(); itr != m_BufferList.end(); itr++)
+	for (auto& buffer : m_BufferList)
 	{
-		if (itr->second != nullptr)
+		if (buffer.second != nullptr)
 		{
-			itr->second->Stop();
-			itr->second->Release();
-			itr->second = nullptr;
+			buffer.second->Stop();
+			buffer.second->Release();
+			buffer.second = nullptr;
 		}
 	}
 
@@ -151,7 +151,8 @@ void Sound::Play(const char* keyword, bool is_loop)
 		return;
 	}
 
-	int loop_bit = is_loop == true ? 1 : 0;
+	const DWORD Default = 0;
+	DWORD loop_bit = (is_loop ? DSBPLAY_LOOPING : Default);
 	// 再生
 	m_BufferList[keyword]->Play(
 		0,
@@ -226,7 +227,6 @@ void Sound::EraseDuplicateSound()
 		}
 	}
 }
-
 
 bool Sound::LoadWavFile(const char* file_name, WavData* out_wave_data)
 {
