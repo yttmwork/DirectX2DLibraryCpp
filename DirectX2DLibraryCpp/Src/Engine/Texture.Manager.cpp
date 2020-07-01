@@ -16,26 +16,28 @@ void TextureManager::Release()
 void TextureManager::ReleaseTexture(const char* keyword)
 {
 	if (m_TextureList.count(keyword) > 0 &&
-		m_TextureList[keyword].TexutreData != nullptr)
+		m_TextureList[keyword].TextureData != nullptr)
 	{
-		m_TextureList[keyword].TexutreData->Release();
-		m_TextureList[keyword].TexutreData = nullptr;
+		m_TextureList[keyword].TextureData->Release();
+		m_TextureList[keyword].TextureData = nullptr;
 		m_TextureList.erase(keyword);
 	}
 }
 
 void TextureManager::ReleaseAllTextures()
 {
-	for (auto& itr : m_TextureList)
+	for (auto& texture : m_TextureList)
 	{
-		if (itr.second.TexutreData == nullptr)
+		if (texture.second.TextureData == nullptr)
 		{
 			continue;
 		}
 
-		itr.second.TexutreData->Release();
-		itr.second.TexutreData = nullptr;
+		texture.second.TextureData->Release();
+		texture.second.TextureData = nullptr;
 	}
+
+	m_TextureList.clear();
 }
 
 bool TextureManager::LoadTexture(const char* keyword, const char* file_name)

@@ -142,7 +142,7 @@ void Graphics::DrawTextureUV(float x, float y, const char* texture_keyword, floa
 	// 頂点構造の指定
 	m_D3DDevice->SetFVF(VERTEX_FVF);
 
-	m_D3DDevice->SetTexture(0, texture_data->TexutreData);
+	m_D3DDevice->SetTexture(0, texture_data->TextureData);
 
 	m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(CustomVertex));
 }
@@ -178,7 +178,7 @@ void Graphics::DrawTexture(float x, float y, const char* texture_keyword, UCHAR 
 	// 頂点構造の指定
 	m_D3DDevice->SetFVF(VERTEX_FVF);
 
-	m_D3DDevice->SetTexture(0, texture_data->TexutreData);
+	m_D3DDevice->SetTexture(0, texture_data->TextureData);
 
 	m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(CustomVertex));
 }
@@ -241,7 +241,7 @@ bool Graphics::CreateTexture(const char* file_name, Texture* texture_data)
 		0x0000ff00,
 		nullptr,
 		nullptr,
-		&texture_data->TexutreData)))
+		&texture_data->TextureData)))
 	{
 		return false;
 	}
@@ -250,9 +250,9 @@ bool Graphics::CreateTexture(const char* file_name, Texture* texture_data)
 		// テクスチャサイズの取得
 		D3DSURFACE_DESC desc;
 
-		if (FAILED(texture_data->TexutreData->GetLevelDesc(0, &desc)))
+		if (FAILED(texture_data->TextureData->GetLevelDesc(0, &desc)))
 		{
-			texture_data->TexutreData->Release();
+			texture_data->TextureData->Release();
 			return false;
 		}
 		texture_data->Width = desc.Width;
