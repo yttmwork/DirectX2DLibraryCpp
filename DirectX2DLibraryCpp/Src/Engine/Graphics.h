@@ -13,6 +13,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include "EngineConstant.h"
+#include "../Common/Vec.h"
+#include "../Common/Size.h"
 
 /** @brief 描画クラス */
 class Graphics
@@ -96,6 +98,13 @@ public:
 	void DrawFont(float x, float y, const char* text, FontSize size, FontColor color);
 
 	/**
+	* @brief 描画用矩形の軸設定関数
+	* @details 指定された軸の値をm_CurrentPivotに設定する
+	* @param[in] pivot_type 更新する軸の値
+	*/
+	void SetPivotType(PivotType pivot_type);
+
+	/**
 	* @brief テクスチャ作成関数
 	* @details 指定された情報から読み込み、テクスチャを作成する
 	* @retval true 作成成功
@@ -105,6 +114,7 @@ public:
 	*/
 	bool CreateTexture(const char* file_name, Texture* texture_data);
 
+private:
 	/**
 	* @brief Graphicsインタフェース作成関数
 	* @details DirectGraphicsのインターフェースを作成する
@@ -151,10 +161,18 @@ public:
 	*/
 	void TransformRect(CustomVertex* vertices, float pos_x, float pos_y, float angle, float scale_x, float scale_y);
 
+	/**
+	* @brief オフセット値計算関数
+	* @details m_CurrentPivotに設定されている値を参考にして軸のオフセット値を計算して返す
+	* @retval オフセット値
+	* @param[in] rect_size オフセット値の参考に使う矩形のサイズ
+	*/
+	Vec2 CalculatePivotOffset(Size* rect_size);
 private:
 	LPDIRECT3D9 m_D3DInterface;						//!< DirectGraphicsインターフェース
 	LPDIRECT3DDEVICE9 m_D3DDevice;					//!< DirectGraphicsデバイス
 	LPD3DXFONT m_FontList[FontSize::FontSizeMax];	//!< フォントデバイスリスト
+	PivotType m_CurrentPivot;						//!< 描画用矩形の軸
 };
 
 #endif

@@ -113,6 +113,13 @@ public:
 	*/
 	static 	void DrawFont(float x, float y, const char* text, FontSize size, FontColor color);
 
+	/**
+	* @brief 描画用矩形の軸設定関数
+	* @details 指定された軸の値をm_CurrentPivotに設定する
+	* @param[in] pivot_type 更新する軸の値
+	*/
+	static void SetPivotType(PivotType pivot_type);
+
 	// 入力関連
 	/**
 	* @brief ゲームパッドボタンの押下状態判定関数

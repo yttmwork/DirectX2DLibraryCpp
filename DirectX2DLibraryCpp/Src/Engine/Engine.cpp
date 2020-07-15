@@ -79,6 +79,11 @@ void Engine::DrawFont(float x, float y, const char* text, FontSize size, FontCol
 	m_Instance->GetGraphics()->DrawFont(x, y, text, size, color);
 }
 
+void Engine::SetPivotType(PivotType pivot_type)
+{
+	m_Instance->GetGraphics()->SetPivotType(pivot_type);
+}
+
 bool Engine::IsGamePadButtonHeld(GamePadKind button)
 {
 	GamePad* game_pad = m_Instance->GetInput()->GetGamePad();

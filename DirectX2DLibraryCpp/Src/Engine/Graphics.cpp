@@ -32,6 +32,8 @@ bool Graphics::Initialize(bool is_window_mode)
 		return false;
 	}
 
+	SetPivotType(PivotType::LeftTop);
+
 	m_D3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	m_D3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_D3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
@@ -119,25 +121,26 @@ void Graphics::DrawTextureUV(float x, float y, const char* texture_keyword, floa
 	float v_top = tex_y / texture_data->Height;
 	float v_bottom = (tex_y + sprite_height) / texture_data->Height;
 
-	float half_width = sprite_width / 2.0f;
-	float half_height = sprite_height / 2.0f;
+	Size size = Size((float)texture_data->Width, (float)texture_data->Height);
 
 	DWORD color = D3DCOLOR_RGBA(0xff, 0xff, 0xff, alpha);
 	CustomVertex v[4] =
 	{
-		{ -half_width, -half_height, 0.0f, 1.0f, color, u_left, v_top },
-		{ half_width, -half_height, 0.0f, 1.0f, color, u_right, v_top },
-		{ half_width, half_height, 0.0f, 1.0f, color, u_right, v_bottom },
-		{ -half_width, half_height, 0.0f, 1.0f, color, u_left, v_bottom },
+		{ 0.0f, 0.0f, 0.0f, 1.0f, color, u_left, v_top },
+		{ size.Width, 0.0f, 0.0f, 1.0f, color, u_right, v_top },
+		{ size.Width, size.Height, 0.0f, 1.0f, color, u_right, v_bottom },
+		{ 0.0f, size.Height, 0.0f, 1.0f, color, u_left, v_bottom },
 	};
 
-	TransformRect(v, x, y, angle, scale_x, scale_y);
+	Vec2 offset = CalculatePivotOffset(&size);
 
 	for (int i = 0; i < 4; i++)
 	{
-		v[i].X += half_height;
-		v[i].Y += half_height;
+		v[i].X += offset.X;
+		v[i].Y += offset.Y;
 	}
+
+	TransformRect(v, x, y, angle, scale_x, scale_y);
 
 	// 頂点構造の指定
 	m_D3DDevice->SetFVF(VERTEX_FVF);
@@ -155,25 +158,26 @@ void Graphics::DrawTexture(float x, float y, const char* texture_keyword, UCHAR 
 		return;
 	}
 
-	float half_width = texture_data->Width / 2.0f;
-	float half_height = texture_data->Height / 2.0f;
+	Size size = Size((float)texture_data->Width, (float)texture_data->Height);
 
 	DWORD color = D3DCOLOR_RGBA(0xff, 0xff, 0xff, alpha);
 	CustomVertex v[4] =
 	{
-		{ -half_width, -half_height, 0.0f, 1.0f, color, 0.0f, 0.0f },
-		{ half_width, -half_height, 0.0f, 1.0f, color, 1.0f, 0.0f },
-		{ half_width, half_height, 0.0f, 1.0f, color, 1.0f, 1.0f },
-		{ -half_width, half_height, 0.0f, 1.0f, color, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 0.0f, 1.0f, color, 0.0f, 0.0f },
+		{ size.Width, 0.0f, 0.0f, 1.0f, color, 1.0f, 0.0f },
+		{ size.Width, size.Height, 0.0f, 1.0f, color, 1.0f, 1.0f },
+		{ 0.0f, size.Height, 0.0f, 1.0f, color, 0.0f, 1.0f },
 	};
 
-	TransformRect(v, x, y, angle, scale_x, scale_y);
+	Vec2 offset = CalculatePivotOffset(&size);
 
 	for (int i = 0; i < 4; i++)
 	{
-		v[i].X += half_height;
-		v[i].Y += half_height;
+		v[i].X += offset.X;
+		v[i].Y += offset.Y;
 	}
+
+	TransformRect(v, x, y, angle, scale_x, scale_y);
 
 	// 頂点構造の指定
 	m_D3DDevice->SetFVF(VERTEX_FVF);
@@ -219,6 +223,11 @@ void Graphics::DrawFont(float x, float y, const char* text, FontSize font_type, 
 		DT_LEFT,
 		D3DCOLOR_XRGB(r, g, b)
 	);
+}
+
+void Graphics::SetPivotType(PivotType pivot_type)
+{
+	m_CurrentPivot = pivot_type;
 }
 
 bool Graphics::CreateTexture(const char* file_name, Texture* texture_data)
@@ -389,4 +398,24 @@ void Graphics::TransformRect(CustomVertex* vertices, float pos_x, float pos_y, f
 		vertices[i].X = x;
 		vertices[i].Y = y;
 	}
+}
+
+Vec2 Graphics::CalculatePivotOffset(Size* size)
+{
+	Vec2 offset[] =
+	{
+		{ Vec2(0.0f, 0.0f) },
+		{ Vec2(-size->Width / 2.0f, 0.0f) },
+		{ Vec2(-size->Width, 0.0f) },
+	
+		{ Vec2(0.0f, -size->Height / 2.0f) },
+		{ Vec2(-size->Width / 2.0f, -size->Height / 2.0f) },
+		{ Vec2(-size->Width, -size->Height / 2.0f) },
+
+		{ Vec2(0.0f, -size->Height) },
+		{ Vec2(-size->Width / 2.0f, -size->Height) },
+		{ Vec2(-size->Width, -size->Height) },
+	};
+
+	return offset[m_CurrentPivot];
 }

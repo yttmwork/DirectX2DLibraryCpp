@@ -144,6 +144,12 @@ Engine::DrawFont(
 	FontColor::Black); // フォントカラー
 ```
 
+#### 軸の指定
+```
+// 描画に使用する矩形の軸を設定する
+// DrawTexture or DrawTextureUVで指定する座標指定や拡縮率、回転は軸を中心に行う
+Engine::SetPivotType(PivotType::LeftTop);
+```
 
 ### DirectInput
 #### 入力情報

@@ -12,6 +12,21 @@ const int RegularFontSize = 24;	//!< フォントサイズ(中)
 const int LargeFontSize = 32;	//!< フォントサイズ(大)
 const int MaxKeyNum = 256;		//!< キー最大数
 
+/** @brief 描画用矩形の軸の種類 */
+enum PivotType
+{
+	LeftTop,		//!< X軸：左 Y軸：上
+	CenterTop,		//!< X軸：中 Y軸：上
+	RightTop,		//!< X軸：右 Y軸：上
+	LeftCenter,		//!< X軸：左 Y軸：中
+	CenterCenter,	//!< X軸：中 Y軸：中
+	RightCenter,	//!< X軸：右 Y軸：中
+	LeftBottom,		//!< X軸：左 Y軸：下
+	CenterBottom,	//!< X軸：中 Y軸：下
+	RightBottom,	//!< X軸：右 Y軸：下
+	MaxPivotType
+};
+
 /** @brief フォントカラー */
 enum FontColor
 {

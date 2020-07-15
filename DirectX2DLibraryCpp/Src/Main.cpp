@@ -5,15 +5,19 @@
 #include "Engine/Engine.h"
 #include "Common/Vec.h"
 
-Vec2 g_Position = Vec2(0.0f, 0.0f);
+Vec2 g_Position = Vec2(300.0f, 200.0f);
 Vec2 g_Scale = Vec2(1.0f, 1.0f);
 float g_Angle = 0.0f;
+int g_PivotType = PivotType::LeftTop;
 
 // ゲーム処理
 void GameProcessing();
 // 描画処理
 void DrawProcessing();
 
+/*
+	エントリポイント
+*/
 int WINAPI WinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -78,7 +82,9 @@ int WINAPI WinMain(
 	_CrtDumpMemoryLeaks();
 
 	return 0;
-}
+
+} // プログラム終了
+
 void GameProcessing()
 {
 	// 入力データの更新
@@ -118,6 +124,17 @@ void GameProcessing()
 		g_Position = Vec2(400, 300);
 	}
 
+	// 軸の切り替え
+	if (Engine::IsKeyboardKeyPushed(DIK_RETURN) == true)
+	{
+		g_PivotType++;
+		if (g_PivotType >= PivotType::MaxPivotType)
+		{
+			g_PivotType = PivotType::LeftTop;
+		}
+	}
+
+	// 
 	if (Engine::IsKeyboardKeyReleased(DIK_A))
 	{
 		// 重複再生
@@ -125,6 +142,17 @@ void GameProcessing()
 		// StartPlayingDuplicateSoundでは同じサウンドファイルでも重複して再生可能
 		Engine::PlayDuplicateSound("Se");
 		Engine::PlayDuplicateSound("Se");
+	}
+	
+	static bool is_add = true;
+	float add = (is_add == true) ? 0.01f : -0.01f;
+	g_Scale.X += add;
+	g_Scale.Y += add;
+
+	if (g_Scale.X > 3.0f ||
+		g_Scale.X < 0.2f)
+	{
+		is_add = !is_add;
 	}
 }
 
@@ -138,12 +166,34 @@ void DrawProcessing()
 	// キーワードで指定されたテクスチャを描画する
 	// DrawTextureはテクスチャをそのまま描画する
 	// 一部切り取って描画する場合はDrawTextureUVを使用する
-	Engine::DrawTexture(g_Position.X, g_Position.Y, "Enemy", 128, g_Angle, g_Scale.X, g_Scale.Y);
+	Engine::SetPivotType(PivotType::LeftTop);
+	Engine::DrawTexture(300, 200, "Enemy", 128, 0.0f, 1.0f, 1.0f);
+
+	Engine::SetPivotType((PivotType)g_PivotType);
+	Engine::DrawTextureUV(300, 200, "Enemy", 0.0f, 0.0f, 64.0f, 64.0f, 128, 0.0f, g_Scale.X, g_Scale.Y);
 
 	// フォント描画
-	Engine::DrawFont(0.0f, 0.0f, "FontSize:Small", FontSize::Small, FontColor::White);
+	Engine::DrawFont(0.0f, 5.0f, "FontSize:Small", FontSize::Small, FontColor::White);
 	Engine::DrawFont(0.0f, 30.0f, "FontSize:Regular", FontSize::Regular, FontColor::White);
 	Engine::DrawFont(0.0f, 60.0f, "FontSize:Large", FontSize::Large, FontColor::White);
+
+	// 軸描画
+	const char* pivot_string_list[] =
+	{
+		"X:Left Y:Top",
+		"X:Center Y:Top",
+		"X:Right Y:Top",
+
+		"X:Left Y:Center",
+		"X:Center Y:Center",
+		"X:Right Y:Center",
+
+		"X:Left Y:Bottom",
+		"X:Center Y:Bottom",
+		"X:Right Y:Bottom",
+	};
+	Engine::DrawFont(300.0f, 15.0f, pivot_string_list[(int)g_PivotType], FontSize::Regular, FontColor::White);
+
 
 	// 描画終了
 	// 描画処理を終了する場合、必ず最後に実行する
