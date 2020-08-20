@@ -121,7 +121,7 @@ void Graphics::DrawTextureUV(float x, float y, const char* texture_keyword, floa
 	float v_top = tex_y / texture_data->Height;
 	float v_bottom = (tex_y + sprite_height) / texture_data->Height;
 
-	Size size = Size((float)texture_data->Width, (float)texture_data->Height);
+	Size size = Size(sprite_width, sprite_height);
 
 	DWORD color = D3DCOLOR_RGBA(0xff, 0xff, 0xff, alpha);
 	CustomVertex v[4] =
