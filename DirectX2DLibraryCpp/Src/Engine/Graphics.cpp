@@ -237,10 +237,11 @@ bool Graphics::CreateTexture(const char* file_name, Texture* texture_data)
 	// 2の累乗じゃないケースを想定して元のサイズを取得してD3DXCreateTextureFromFileExで使う
 	D3DXGetImageInfoFromFile(file_name, &info);
 
-	if (FAILED(D3DXCreateTextureFromFileEx(m_D3DDevice,
+	if (FAILED(D3DXCreateTextureFromFileEx(
+		m_D3DDevice,
 		file_name,
-		0,
-		0,
+		info.Width,
+		info.Height,
 		1,
 		0,
 		D3DFMT_UNKNOWN,
