@@ -99,6 +99,38 @@ void Graphics::FinishDraw()
 	m_D3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
 }
 
+void Graphics::DrawRect(float x, float y, float width, float height, DWORD color, UCHAR alpha, float angle, float scale_x, float scale_y)
+{
+	Size size = Size(width, height);
+
+	color += alpha << 24;
+
+	CustomVertex v[4] =
+	{
+		{ 0.0f, 0.0f, 0.0f, 1.0f, color, 0.0f, 0.0f },
+		{ size.Width, 0.0f, 0.0f, 1.0f, color, 1.0f, 0.0f },
+		{ size.Width, size.Height, 0.0f, 1.0f, color, 1.0f, 1.0f },
+		{ 0.0f, size.Height, 0.0f, 1.0f, color, 0.0f, 1.0f },
+	};
+
+	Vec2 offset = CalculatePivotOffset(&size);
+
+	for (int i = 0; i < 4; i++)
+	{
+		v[i].X += offset.X;
+		v[i].Y += offset.Y;
+	}
+
+	TransformRect(v, x, y, angle, scale_x, scale_y);
+
+	// 頂点構造の指定
+	m_D3DDevice->SetFVF(VERTEX_FVF);
+
+	m_D3DDevice->SetTexture(0, nullptr);
+
+	m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, v, sizeof(CustomVertex));
+}
+
 void Graphics::DrawTextureUV(float x, float y, const char* texture_keyword, float tex_x, float tex_y, float sprite_width, float sprite_height, UCHAR alpha, float angle, float scale_x, float scale_y)
 {
 	Texture* texture_data = Engine::GetTexture(texture_keyword);

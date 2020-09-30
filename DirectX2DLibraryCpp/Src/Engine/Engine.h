@@ -73,6 +73,21 @@ public:
 	static void FinishDrawing();
 
 	/**
+	* @brief 矩形描画関数
+	* @details 指定された位置に矩形を描画する
+	* @param[in] x X軸描画座標
+	* @param[in] y Y軸描画座標
+	* @param[in] width 矩形横幅
+	* @param[in] height 矩形縦幅
+	* @param[in] color 矩形の色(RGB形式)(オプション)
+	* @param[in] alpha 透過値(オプション)
+	* @param[in] angle 回転角度(オプション)
+	* @param[in] scale_x 拡縮率X(オプション)
+	* @param[in] scale_y 拡縮率Y(オプション)
+	*/
+	static void DrawRect(float x, float y, float width, float height, DWORD color = 0x00, UCHAR alpha = 255, float angle = 0.0f, float scale_x = 1.0f, float scale_y = 1.0f);
+
+	/**
 	* @brief テクスチャ描画関数
 	* @details 指定された位置にテクスチャを描画する
 	* @param[in] x X軸描画座標

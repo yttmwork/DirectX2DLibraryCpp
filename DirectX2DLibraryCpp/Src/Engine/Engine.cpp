@@ -64,6 +64,11 @@ void Engine::FinishDrawing()
 	m_Instance->GetGraphics()->FinishDraw();
 }
 
+void Engine::DrawRect(float x, float y, float width, float height, DWORD color, UCHAR alpha, float angle, float scale_x, float scale_y)
+{
+	m_Instance->GetGraphics()->DrawRect(x, y, width, height, color, alpha, angle, scale_x, scale_y);
+}
+
 void Engine::DrawTexture(float x, float y, const char* texture_keyword, UCHAR alpha, float angle, float scale_x, float scale_y)
 {
 	m_Instance->GetGraphics()->DrawTexture(x, y, texture_keyword, alpha, angle, scale_x, scale_y);

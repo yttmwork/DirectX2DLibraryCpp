@@ -103,6 +103,25 @@ Engine::StartDrawing(0);
 Engine::FinishDrawing();
 ```
 
+#### 矩形描画
+``` 
+// 矩形描画
+// 描画は座標を矩形の左上の位置として描画する
+// 矩形の色や回転、拡縮はオプション
+Engine::DrawRect(
+	g_Position.X,  // 描画座標X
+	g_Position.Y,  // 描画座標Y
+	g_Width,       // 矩形の横幅
+	g_Height,      // 矩形の縦幅
+	g_Color,       // 矩形の色
+	g_Alpha,       // 透過値
+	g_Angle,       // 回転角度
+	g_Scale.X,     // 拡縮率X
+	g_Scale.Y);    // 拡縮率Y
+
+```
+
+
 #### テクスチャ描画
 ``` 通常
 // テクスチャ描画
