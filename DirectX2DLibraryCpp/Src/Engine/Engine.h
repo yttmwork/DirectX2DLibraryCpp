@@ -193,6 +193,12 @@ public:
 	*/
 	static bool IsMouseButtonReleased(MouseButton button_type);
 
+	/**
+	* @brief マウス座標のゲッター
+	* @retval Vec2 マウスの座標
+	*/
+	static Vec2 GetMousePos();
+
 	// サウンド関連
 	/**
 	* @brief サウンド再生関数

@@ -138,6 +138,12 @@ bool Engine::IsMouseButtonReleased(MouseButton button_type)
 	return mouse->IsButtonReleased(button_type);
 }
 
+Vec2 Engine::GetMousePos()
+{
+	Mouse* mouse = m_Instance->GetInput()->GetMouse();
+	return mouse->GetPos();
+}
+
 void Engine::PlaySound(const char* keyword, bool is_loop)
 {
 	m_Instance->GetSound()->Play(keyword, is_loop);

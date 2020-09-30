@@ -222,6 +222,13 @@ if (Engine::IsGamePadButtonReleased(GamePadKind::GamePadKindButton01) == true)
 }
 ```
 
+#### マウス座標の取得
+```
+// マウス座標の取得
+Vec2 mouse_pos = Engine::GetMousePos();
+```
+
+
 ### DirectSound
 #### サウンドファイル読み込み
 ``` 

@@ -63,6 +63,12 @@ public:
 	*/
 	bool IsButtonReleased(MouseButton button_type);
 
+	/**
+	* @brief マウス座標のゲッター
+	* @retval Vec2 マウスの座標
+	*/
+	Vec2 GetPos();
+
 private:
 	/**
 	* @brief ボタンの入力判定関数

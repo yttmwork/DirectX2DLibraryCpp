@@ -125,3 +125,8 @@ bool Mouse::IsButtonInputed(BYTE button)
 	const int MouseTrg = 0x80;
 	return (button & MouseTrg);
 }
+
+Vec2 Mouse::GetPos()
+{
+	return m_Pos;
+}
