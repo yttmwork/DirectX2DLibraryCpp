@@ -50,6 +50,7 @@ void Engine::Release()
 
 void Engine::Update()
 {
+	m_Instance->GetWindow()->Update();
 	m_Instance->GetInput()->Update();
 	m_Instance->GetSound()->EraseDuplicateSound();
 }
@@ -207,4 +208,14 @@ Texture* Engine::GetTexture(const char* keyword)
 bool Engine::CreateTexture(const char* file_name, Texture* texture_data)
 {
 	return m_Instance->GetGraphics()->CreateTexture(file_name, texture_data);
+}
+
+bool Engine::IsClosedWindow()
+{
+	return m_Instance->GetWindow()->IsClosed();
+}
+
+bool Engine::IsRecievedWindowMessage()
+{
+	return m_Instance->GetWindow()->IsRecievedMessage();
 }

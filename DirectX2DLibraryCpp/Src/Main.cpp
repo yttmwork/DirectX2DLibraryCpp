@@ -46,31 +46,16 @@ int WINAPI WinMain(
 	// 指定されたキーワードのサウンドファイルを再生する
 	Engine::PlaySound("Bgm", true);
 
-	while (true)
+	while (Engine::IsClosedWindow() == false)
 	{
-		bool message_ret = false;
-		MSG msg;
+		// Engineの更新
+		Engine::Update();
 
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT)
-			{
-				break;
-			}
-			else 
-			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-		}
-		else
-		{
-			// ゲーム処理
-			GameProcessing();
+		// ゲーム処理
+		GameProcessing();
 
-			// 描画開始
-			DrawProcessing();
-		}
+		// 描画開始
+		DrawProcessing();
 	}
 
 	// エンジン終了
@@ -87,9 +72,6 @@ int WINAPI WinMain(
 
 void GameProcessing()
 {
-	// 入力データの更新
-	Engine::Update();
-
 	float speed = 2.0f;
 
 	g_Angle += 1.0f;

@@ -81,3 +81,28 @@ bool Window::MakeWindow(int width, int height, const char* title)
 
 	return hWnd;
 }
+
+void Window::Update()
+{
+	bool message_ret = false;
+	MSG msg;
+
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	{
+		if (msg.message == WM_QUIT)
+		{
+			m_IsClosed = true;
+		}
+		else
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		m_IsRecievedMessage = true;
+	}
+	else
+	{
+		m_IsRecievedMessage = false;
+	}
+
+}

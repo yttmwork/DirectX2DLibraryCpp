@@ -322,6 +322,10 @@ public:
 	*/
 	static bool CreateTexture(const char* file_name, Texture* texture_data);
 
+	static bool IsClosedWindow();
+
+	static bool IsRecievedWindowMessage();
+
 private:
 	/**
 	* @brief Graphicsインスタンスのゲッター

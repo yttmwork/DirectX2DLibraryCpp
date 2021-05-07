@@ -16,6 +16,12 @@
 class Window
 {
 public:
+	Window() :
+		m_IsClosed(false),
+		m_IsRecievedMessage(false)
+	{
+	}
+
 	/**
 	* @brief ウィンドウ生成関数
 	* @details 引数で指定された内容でウィンドウを作成する
@@ -37,6 +43,38 @@ public:
 	* @param[in] lparam メッセージ情報その②
 	*/
 	static LRESULT CALLBACK WindowProc(HWND window_handle, UINT message_id, WPARAM wparam, LPARAM lparam);
+
+	/**
+	* @brief 更新関数
+	* @details Windowsのメッセージ対応の更新を行う
+	*/
+	void Update();
+
+	/**
+	* @brief ウィンドウ閉鎖チェック関数
+	* @details ウィンドウが閉じられているかどうかを返す
+	* @retval true 閉じている
+	* @retval false 閉じていない
+	*/
+	bool IsClosed()
+	{
+		return m_IsClosed;
+	}
+
+	/**
+	* @brief メッセージ受信チェック関数
+	* @details OSからメッセージを受信したかどうかを返す
+	* @retval true 受信した
+	* @retval false 受信してない
+	*/
+	bool IsRecievedMessage()
+	{
+		return m_IsRecievedMessage;
+	}
+
+private:
+	bool m_IsClosed;
+	bool m_IsRecievedMessage;
 };
 
 
