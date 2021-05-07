@@ -99,6 +99,38 @@ void Graphics::FinishDraw()
 	m_D3DDevice->Present(nullptr, nullptr, nullptr, nullptr);
 }
 
+void Graphics::DrawCircle(float x, float y, float radius, DWORD color, UCHAR alpha)
+{
+	color += alpha << 24;
+
+	CustomVertex v[181] =
+	{
+		x, y, 0.0f, 1.0f, color, 0.0f, 0.0f
+	};
+
+	for (int i = 1; i < 181; i++)
+	{
+		float rad = D3DXToRadian((i - 1) * 2.0f);
+		float vec_x = cosf(rad) * radius;
+		float vec_y = sinf(rad) * radius;
+
+		v[i].X = x + vec_x;
+		v[i].Y = y + vec_y;
+		v[i].Z = 0.0f;
+		v[i].Rhw = 1.0f;
+		v[i].Color = color;
+		v[i].TextureX = 0.0f;
+		v[i].TexrureY = 0.0f;
+	}
+
+	// 頂点構造の指定
+	m_D3DDevice->SetFVF(VERTEX_FVF);
+
+	m_D3DDevice->SetTexture(0, nullptr);
+
+	m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 181 - 2, v, sizeof(CustomVertex));
+}
+
 void Graphics::DrawRect(float x, float y, float width, float height, DWORD color, UCHAR alpha, float angle, float scale_x, float scale_y)
 {
 	Size size = Size(width, height);

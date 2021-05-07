@@ -194,6 +194,7 @@ void DrawProcessing()
 	};
 	Engine::DrawFont(300.0f, 15.0f, pivot_string_list[(int)g_PivotType], FontSize::Regular, FontColor::White);
 
+	Engine::DrawCircle(200.0f, 300.0f, 50.0f, 0xff0000);
 
 	// 描画終了
 	// 描画処理を終了する場合、必ず最後に実行する

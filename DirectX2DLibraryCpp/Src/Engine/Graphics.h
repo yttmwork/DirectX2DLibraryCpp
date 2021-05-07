@@ -72,6 +72,17 @@ public:
 	void DrawRect(float x, float y, float width, float height, DWORD color = 0x00, UCHAR alpha = 255, float angle = 0.0f, float scale_x = 1.0f, float scale_y = 1.0f);
 
 	/**
+	* @brief 円描画関数
+	* @details 指定された位置に円を描画する
+	* @param[in] x X軸描画座標
+	* @param[in] y Y軸描画座標
+	* @param[in] radius 矩形横幅
+	* @param[in] color 矩形の色(RGB形式)(オプション)
+	* @param[in] alpha 透過値(オプション)
+	*/
+	void DrawCircle(float x, float y, float radius, DWORD color = 0x00, UCHAR alpha = 255);
+
+	/**
 	* @brief テクスチャ描画関数
 	* @details 指定された位置にテクスチャを描画する
 	* @param[in] x X軸描画座標
