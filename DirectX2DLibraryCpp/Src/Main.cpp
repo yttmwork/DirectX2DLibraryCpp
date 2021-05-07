@@ -35,7 +35,9 @@ int WINAPI WinMain(
 	// 第一引数の文字列で読み込んだテクスチャを登録する
 	// 描画や取得は登録した文字列で指定する
 	Engine::LoadTexture("Enemy", "Res/Enemy.png");
+	Engine::LoadTexture("Bomb", "Res/bomb_move.png");
 
+	
 	// サウンド読み込み
 	// 第一引数の文字列で読み込んだサウンドを登録する
 	// 描画や取得は登録した文字列で指定する
@@ -175,6 +177,12 @@ void DrawProcessing()
 		"X:Right Y:Bottom",
 	};
 	Engine::DrawFont(300.0f, 15.0f, pivot_string_list[(int)g_PivotType], FontSize::Regular, FontColor::White);
+
+	static float angle = 0.0f;
+	angle += 1.0f;
+	Engine::DrawTextureUV(0.0f, 300.0f, "Bomb", 128.0f, 0.0f, 128.0f, 128.0f, 255, angle);
+
+	Engine::DrawRect(200.0f, 200.0f, 200.0f, 100.0f, 0xff0000, 64);
 
 	Engine::DrawCircle(200.0f, 300.0f, 50.0f, 0xff0000);
 
