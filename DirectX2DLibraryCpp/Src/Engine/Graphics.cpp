@@ -103,12 +103,12 @@ void Graphics::DrawCircle(float x, float y, float radius, DWORD color, UCHAR alp
 {
 	color += alpha << 24;
 
-	CustomVertex v[181] =
+	CustomVertex v[182] =
 	{
 		x, y, 0.0f, 1.0f, color, 0.0f, 0.0f
 	};
 
-	for (int i = 1; i < 181; i++)
+	for (int i = 1; i < 182; i++)
 	{
 		float rad = D3DXToRadian((i - 1) * 2.0f);
 		float vec_x = cosf(rad) * radius;
@@ -128,7 +128,7 @@ void Graphics::DrawCircle(float x, float y, float radius, DWORD color, UCHAR alp
 
 	m_D3DDevice->SetTexture(0, nullptr);
 
-	m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 181 - 2, v, sizeof(CustomVertex));
+	m_D3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 182 - 2, v, sizeof(CustomVertex));
 }
 
 void Graphics::DrawRect(float x, float y, float width, float height, DWORD color, UCHAR alpha, float angle, float scale_x, float scale_y)
