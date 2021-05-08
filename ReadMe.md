@@ -106,7 +106,24 @@ Engine::FinishDrawing();
 #### 矩形描画
 ``` 
 // 矩形描画
-// 描画は座標を矩形の左上の位置として描画する
+// 矩形の色や回転、拡縮はオプション
+Engine::DrawRect(
+	g_Position.X,  // 描画座標X
+	g_Position.Y,  // 描画座標Y
+	g_Width,       // 矩形の横幅
+	g_Height,      // 矩形の縦幅
+	g_Color,       // 矩形の色
+	g_Alpha,       // 透過値
+	g_Angle,       // 回転角度
+	g_Scale.X,     // 拡縮率X
+	g_Scale.Y);    // 拡縮率Y
+
+```
+
+#### 円描画
+``` 
+// 円描画
+// 描画は円を原点として中心で行われる
 // 矩形の色や回転、拡縮はオプション
 Engine::DrawRect(
 	g_Position.X,  // 描画座標X
@@ -125,7 +142,6 @@ Engine::DrawRect(
 #### テクスチャ描画
 ``` 通常
 // テクスチャ描画
-// 描画は座標を矩形の左上の位置として描画する
 // 回転角度、拡縮率はオプション
 Engine::DrawTexture(
 	g_Position.X,  // 描画座標X
@@ -166,7 +182,7 @@ Engine::DrawFont(
 #### 軸の指定
 ```
 // 描画に使用する矩形の軸を設定する
-// DrawTexture or DrawTextureUVで指定する座標指定や拡縮率、回転は軸を中心に行う
+// DrawTexture or DrawTextureUVで指定する座標指定や拡縮、回転は軸を中心に行う
 Engine::SetPivotType(PivotType::LeftTop);
 ```
 
@@ -247,7 +263,6 @@ if (Engine::IsGamePadButtonReleased(GamePadKind::GamePadKindButton01) == true)
 Vec2 mouse_pos = Engine::GetMousePos();
 ```
 
-
 ### DirectSound
 #### サウンドファイル読み込み
 ``` 
@@ -287,4 +302,33 @@ Engine::PlayDuplicateSound("Se");
 // 停止
 // 指定したキーワードの音を停止する
 Engine::StopSound("Bgm");
+```
+
+### DirectSound
+#### サウンドファイル読み込み
+``` 
+// ファイルの読み込み
+// 読み込むファイル名と登録用のキーワードを設定する
+// 読み込みが完了後は登録したキーワードを使用してデータの取得や解放を行う
+// 対応フォーマットはwav
+Engine::LoadSoundFile("Bgm", "Res/Bgm.wav");
+```
+
+#### サウンドファイル解放
+```
+// 指定したキーワードのサウンドファイルを解放する
+Engine::ReleaseSoundFile("Bgm");
+
+// サウンドファイルを全て解放する
+Engine::ReleaseAllSoundFiles();
+```
+
+#### その他
+```
+// ウィンドウクローズチェック関数
+// 生成されたウィンドウが閉じられたかどうかを判定することが出来る
+if (Engine::IsClosedWindow() == true)
+{
+	// ウィンドウは閉じている
+}
 ```
