@@ -322,8 +322,20 @@ public:
 	*/
 	static bool CreateTexture(const char* file_name, Texture* texture_data);
 
+	/**
+	* @brief ウィンドウ閉鎖チェック関数
+	* @details ウィンドウが閉じられているかどうかを返す
+	* @retval true 閉じている
+	* @retval false 閉じていない
+	*/
 	static bool IsClosedWindow();
 
+	/**
+	* @brief メッセージ受信判定関数
+	* @details OSからのメッセージを受信しているかどうかの判定関数
+	* @retval true 受信した
+	* @retval false 受信してない
+	*/
 	static bool IsRecievedWindowMessage();
 
 private:
