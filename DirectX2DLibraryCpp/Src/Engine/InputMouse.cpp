@@ -89,7 +89,7 @@ void Mouse::Update()
 
 bool Mouse::IsButtonHeld(MouseButton button_type)
 {
-	if (IsButtonInputed(m_PrevState.rgbButtons[button_type]) == false &&
+	if (IsButtonInputed(m_PrevState.rgbButtons[button_type]) == true &&
 		IsButtonInputed(m_CurrentState.rgbButtons[button_type]) == true)
 	{
 		return true;
@@ -100,7 +100,7 @@ bool Mouse::IsButtonHeld(MouseButton button_type)
 
 bool Mouse::IsButtonPushed(MouseButton button_type)
 {
-	if (IsButtonInputed(m_PrevState.rgbButtons[button_type]) == true &&
+	if (IsButtonInputed(m_PrevState.rgbButtons[button_type]) == false &&
 		IsButtonInputed(m_CurrentState.rgbButtons[button_type]) == true)
 	{
 		return true;
